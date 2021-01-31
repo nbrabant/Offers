@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">offers_banners_listing.offers_banners_listing_data_source</item>
+        </item>
+
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New Banner</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/newAction</item>
+            </item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>offers_banners_columns</spinner>
+        <deps>
+            <dep>offers_banners_listing.offers_banners_listing_data_source</dep>
+        </deps>
+    </settings>
+
+    <dataSource name="offers_banners_listing_data_source">
+        <settings>
+            <storageConfig>
+                <param name="dataScope" xsi:type="string">filters.store_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Nbrabant_Offers::offers</aclResource>
+        <dataProvider class="Nbrabant\Offers\Ui\DataProvider\Banners\BannersDataProvider" name="offers_banners_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>banner_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <columns name="offers_banners_columns" class="Magento\Ui\Component\Listing\Columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">offers_banners_listing.offers_banners_listing.banners_columns.actions</item>
+                    <item name="target" xsi:type="string">applyAction</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">edit</item>
+                        <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <column name="banner_id" sortOrder="10">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        <column name="label" sortOrder="30">
+            <settings>
+                <addField>true</addField>
+                <filter>text</filter>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <label translate="true">Label</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Nbrabant\Offers\Ui\Component\Listing\Column\BannersAction" sortOrder="200">
+            <settings>
+                <indexField>banner_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+
+</listing>

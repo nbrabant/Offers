@@ -9,7 +9,7 @@ use Nbrabant\Offers\Api\Data\BannerResourceInterface;
  * Class Banner
  * @package Nbrabant\Offers\Model\ResourceModel
  */
-class BannerResource extends AbstractResource implements BannerResourceInterface
+class Banner extends AbstractResource implements BannerResourceInterface
 {
     /**
      *  Initialize main table and table id field

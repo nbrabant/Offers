@@ -4,7 +4,7 @@ namespace Nbrabant\Offers\Model;
 
 use Magento\Framework\Model\AbstractModel;
 use Nbrabant\Offers\Api\Data\BannerResourceInterface;
-use Nbrabant\Offers\Model\ResourceModel\BannerResource as BannerResourceModel;
+use Nbrabant\Offers\Model\ResourceModel\Banner as BannerResourceModel;
 
 /**
  * Class Banner
