@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Nbrabant_Offers::offers" title="Offers" translate="title" module="Nbrabant_Offers" parent="Magento_Backend::marketing" sortOrder="30" dependsOnModule="Magento_Catalog" resource="Nbrabant_Offers::offers"/>
+        <add id="Nbrabant_Offers::offers_banner" title="Offers banners" translate="title" module="Nbrabant_Offers" parent="Nbrabant_Offers::offers" dependsOnModule="Magento_Catalog"  action="offers/banners/" resource="Nbrabant_Offers::offers"/>
+    </menu>
+</config>
