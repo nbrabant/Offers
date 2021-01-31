@@ -39,6 +39,19 @@ class BannersAction extends Column
      */
     public function prepareDataSource(array $dataSource): array
     {
+        if (isset($dataSource['data']['items'])) {
+            foreach ($dataSource['data']['items'] as &$item) {
+                $item[$this->getData('name')]['edit'] = [
+                    'href' => $this->urlBuilder->getUrl(
+                        'offers/banners/edit',
+                        ['id' => $item['banner_id']]
+                    ),
+                    'label' => __('Edit'),
+                    'hidden' => false,
+                ];
+            }
+        }
+
         return $dataSource;
     }
 }

@@ -55,12 +55,13 @@
         </settings>
         <column name="banner_id" sortOrder="10">
             <settings>
+                <addField>true</addField>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <sorting>asc</sorting>
             </settings>
         </column>
-        <column name="label" sortOrder="30">
+        <column name="label" sortOrder="20">
             <settings>
                 <addField>true</addField>
                 <filter>text</filter>
