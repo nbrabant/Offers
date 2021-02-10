@@ -122,7 +122,7 @@
             <formElements>
                 <multiselect>
                     <settings>
-                        <options class="Magento\Catalog\Model\Config\Source\Category"/>
+                        <options class="Nbrabant\Offers\Model\Source\Category"/>
                     </settings>
                 </multiselect>
             </formElements>

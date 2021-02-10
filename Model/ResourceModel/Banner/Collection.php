@@ -12,6 +12,12 @@ use Nbrabant\Offers\Model\ResourceModel\Banner as BannerResource;
  */
 class Collection extends AbstractCollection
 {
+    protected $_idFieldName = BannerResource::BANNER_ID;
+
+    protected $_eventPrefix = 'nbrabant_offers_banner_collection';
+
+    protected $_eventObject = 'banner_collection';
+
     protected function _construct()
     {
         $this->_init(Banner::class, BannerResource::class);

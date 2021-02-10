@@ -2,14 +2,14 @@
 
 namespace Nbrabant\Offers\Model\ResourceModel;
 
-use Magento\Rule\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Nbrabant\Offers\Api\Data\BannerResourceInterface;
 
 /**
  * Class Banner
  * @package Nbrabant\Offers\Model\ResourceModel
  */
-class Banner extends AbstractResource implements BannerResourceInterface
+class Banner extends AbstractDb implements BannerResourceInterface
 {
     /**
      *  Initialize main table and table id field
