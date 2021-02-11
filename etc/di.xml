@@ -4,4 +4,23 @@
 
     <preference for="Nbrabant\Offers\Api\BannerRepositoryInterface" type="Nbrabant\Offers\Model\BannerRepository" />
     <preference for="Nbrabant\Offers\Api\Data\BannerInterface" type="Nbrabant\Offers\Model\Banner" />
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="offers_banners_listing_data_source" xsi:type="string">
+                    Nbrabant\Offers\Model\ResourceModel\Post\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Nbrabant\Offers\Model\ResourceModel\Post\Grid\Collection"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">offer_banner</argument>
+            <argument name="resourceModel" xsi:type="string">Nbrabant\Offers\Model\ResourceModel\Banner</argument>
+        </arguments>
+    </virtualType>
+
 </config>

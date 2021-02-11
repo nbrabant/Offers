@@ -6,18 +6,16 @@
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">offers_banners_listing.offers_banners_listing_data_source</item>
         </item>
-
-        <item name="buttons" xsi:type="array">
-            <item name="add" xsi:type="array">
-                <item name="name" xsi:type="string">add</item>
-                <item name="label" xsi:type="string" translate="true">Add New Banner</item>
-                <item name="class" xsi:type="string">primary</item>
-                <item name="url" xsi:type="string">*/*/newAction</item>
-            </item>
-        </item>
     </argument>
 
     <settings>
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+                <class>primary</class>
+                <label translate="true">Add new Banner</label>
+            </button>
+        </buttons>
         <spinner>offers_banners_columns</spinner>
         <deps>
             <dep>offers_banners_listing.offers_banners_listing_data_source</dep>
@@ -25,20 +23,59 @@
     </settings>
 
     <dataSource name="offers_banners_listing_data_source">
-        <settings>
-            <storageConfig>
-                <param name="dataScope" xsi:type="string">filters.store_id</param>
-            </storageConfig>
-            <updateUrl path="mui/index/render"/>
-        </settings>
-        <aclResource>Nbrabant_Offers::offers</aclResource>
-        <dataProvider class="Nbrabant\Offers\Ui\DataProvider\Banners\BannersDataProvider" name="offers_banners_listing_data_source">
-            <settings>
-                <requestFieldName>id</requestFieldName>
-                <primaryFieldName>banner_id</primaryFieldName>
-            </settings>
-        </dataProvider>
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">
+                Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
+            </argument>
+            <argument name="name" xsi:type="string">offers_banners_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">banner_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">banner_id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+<!--        <settings>-->
+<!--            <storageConfig>-->
+<!--                <param name="dataScope" xsi:type="string">filters.store_id</param>-->
+<!--            </storageConfig>-->
+<!--            <updateUrl path="mui/index/render"/>-->
+<!--        </settings>-->
+<!--        <aclResource>Nbrabant_Offers::offers</aclResource>-->
+<!--        <dataProvider class="Nbrabant\Helloworld\Ui\Component\Banners\DataProvider" name="offers_banners_listing_data_source">-->
+<!--            <settings>-->
+<!--                <requestFieldName>id</requestFieldName>-->
+<!--                <primaryFieldName>banner_id</primaryFieldName>-->
+<!--            </settings>-->
+<!--        </dataProvider>-->
     </dataSource>
+
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="params" xsi:type="array">
+                        <item name="filters_modifier" xsi:type="array"/>
+                    </item>
+                    <item name="observers" xsi:type="array"/>
+                </item>
+            </argument>
+            <settings>
+                <statefull>
+                    <property name="applied" xsi:type="boolean">false</property>
+                </statefull>
+            </settings>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
 
     <columns name="offers_banners_columns" class="Magento\Ui\Component\Listing\Columns">
         <settings>
@@ -69,7 +106,14 @@
                 <label translate="true">Label</label>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Nbrabant\Offers\Ui\Component\Listing\Column\BannersAction" sortOrder="200">
+        <column name="from_date" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="40">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Start Time</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Nbrabant\Offers\Ui\Component\Listing\Column\Banner\Actions" sortOrder="200">
             <settings>
                 <indexField>banner_id</indexField>
             </settings>

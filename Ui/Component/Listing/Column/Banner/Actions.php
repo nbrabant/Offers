@@ -1,6 +1,6 @@
 <?php
 
-namespace Nbrabant\Offers\Ui\Component\Listing\Column;
+namespace Nbrabant\Offers\Ui\Component\Listing\Column\Banner;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
