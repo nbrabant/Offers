@@ -37,7 +37,7 @@ class Edit extends Action
             throw new OfferWrongParameterException(__('Wrong parameter passed for banner'));
         }
 
-        $banner = $this->bannerRepository->findById($bannerId);
+        $banner = $this->bannerRepository->get($bannerId);
         if (!$banner->getId()) {
             throw new OfferBannerNotFoundException(__('Unable to find banner with in #[%1]', $bannerId));
         }

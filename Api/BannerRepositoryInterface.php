@@ -2,28 +2,43 @@
 
 namespace Nbrabant\Offers\Api;
 
+use Magento\Framework\Api\SearchCriteriaInterface;
 use Nbrabant\Offers\Api\Data\BannerInterface;
-use Nbrabant\Offers\Model\ResourceModel\Banner\Collection;
 
 interface BannerRepositoryInterface
 {
     /**
-     * Find Banner from repository Id
-     * @param $id
+     * Save banner from data
+     * @param BannerInterface $banner
      * @return BannerInterface
      */
-    public function findById($id): BannerInterface;
+    public function save(BannerInterface $banner): BannerInterface;
+
+    /**
+     * Find Banner from repository Id
+     * @param int $id
+     * @return BannerInterface
+     */
+    public function get(int $id): BannerInterface;
 
     /**
      * Find all banners
-     * @return Collection
+     * @param SearchCriteriaInterface $searchCriteria
+     * @return BannerInterface[]
      */
-    public function getAll(): Collection;
+    public function getList(SearchCriteriaInterface $searchCriteria): array;
 
     /**
-     * Create banner from data
-     * @param $bannerData
-     * @return BannerInterface
+     * Delete banner
+     * @param BannerInterface $banner
+     * @return bool
      */
-    public function create($bannerData): BannerInterface;
+    public function delete(BannerInterface $banner): bool;
+
+    /**
+     * Delete banner by identifier
+     * @param int $id
+     * @return bool
+     */
+    public function deleteById(int $id): bool;
 }
