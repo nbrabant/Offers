@@ -3,4 +3,5 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
     <preference for="Nbrabant\Offers\Api\BannerRepositoryInterface" type="Nbrabant\Offers\Model\BannerRepository" />
+    <preference for="Nbrabant\Offers\Api\Data\BannerInterface" type="Nbrabant\Offers\Model\Banner" />
 </config>
