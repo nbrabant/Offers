@@ -3,13 +3,10 @@
 namespace Nbrabant\Offers\Block\Category;
 
 use Magento\Catalog\Api\Data\CategoryInterface;
-use Magento\Framework\Api\FilterBuilder;
-use Magento\Framework\Api\Search\FilterGroupBuilder;
-use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Nbrabant\Offers\Api\BannerRepositoryInterface;
-use Nbrabant\Offers\Api\Data\BannerResourceInterface;
+use Nbrabant\Offers\Model\ResourceModel\Banner\SearchCriteria;
 
 class Banners extends Template
 {
@@ -22,43 +19,29 @@ class Banners extends Template
      */
     private $registry;
     /**
-     * @var SearchCriteriaBuilder
+     * @var SearchCriteria
      */
-    private $criteriaBuilder;
-    /**
-     * @var FilterGroupBuilder
-     */
-    private $filterGroupBuilder;
-    /**
-     * @var FilterBuilder
-     */
-    private $filterBuilder;
+    private $searchCriteria;
 
     /**
      * Banners constructor.
      * @param Template\Context $context
      * @param Registry $registry
      * @param BannerRepositoryInterface $bannerRepository
-     * @param SearchCriteriaBuilder $criteriaBuilder
-     * @param FilterGroupBuilder $filterGroupBuilder ,
-     * @param FilterBuilder $filterBuilder
+     * @param SearchCriteria $searchCriteria
      * @param array $data
      */
     public function __construct(
         Template\Context $context,
         Registry $registry,
         BannerRepositoryInterface $bannerRepository,
-        SearchCriteriaBuilder $criteriaBuilder,
-        FilterGroupBuilder $filterGroupBuilder,
-        FilterBuilder $filterBuilder,
+        SearchCriteria $searchCriteria,
         array $data = []
     ) {
         parent::__construct($context, $data);
         $this->bannerRepository = $bannerRepository;
         $this->registry = $registry;
-        $this->criteriaBuilder = $criteriaBuilder;
-        $this->filterGroupBuilder = $filterGroupBuilder;
-        $this->filterBuilder = $filterBuilder;
+        $this->searchCriteria = $searchCriteria;
     }
 
     /**
@@ -69,32 +52,12 @@ class Banners extends Template
      */
     public function getBanners(): array
     {
-        $filters[] = $this->filterBuilder
-            ->setField(BannerResourceInterface::TO_DATE)
-            ->setValue('null');
-        $filters[] = $this->filterBuilder
-            ->setField(BannerResourceInterface::TO_DATE)
-            ->setValue('null');
+        $searchCriteria = $this->searchCriteria->activeForCategoryCriteria(
+            $this->getCurrentCategory()->getId(),
+            new \DateTime()
+        );
 
-        $criteriaBuilder = $this->criteriaBuilder
-            ->addFilter(
-                BannerResourceInterface::CATEGORY_IDS,
-                [$this->getCurrentCategory()->getId()],
-                'in'
-            )
-            ->addFilter(
-                BannerResourceInterface::FROM_DATE,
-                new \DateTime(),
-                'lt'
-            )
-//            ->setFilterGroups([
-//                $this->filterGroupBuilder
-//                    ->setFilters($filters)
-//                    ->create()
-//            ])
-            ->create();
-
-        return $this->bannerRepository->getList($criteriaBuilder);
+        return $this->bannerRepository->getList($searchCriteria);
     }
 
     /**

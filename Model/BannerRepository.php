@@ -2,6 +2,7 @@
 
 namespace Nbrabant\Offers\Model;
 
+use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\StateException;
@@ -30,21 +31,28 @@ class BannerRepository implements BannerRepositoryInterface
      * @var CollectionFactory
      */
     private $collectionFactory;
+    /**
+     * @var CollectionProcessorInterface
+     */
+    private $collectionProcessor;
 
     /**
      * BannerRepository constructor.
      * @param BannerFactory $bannerFactory
      * @param BannerResource $bannerResource
      * @param CollectionFactory $collectionFactory
+     * @param CollectionProcessorInterface $collectionProcessor
      */
     public function __construct(
         BannerFactory $bannerFactory,
         BannerResource $bannerResource,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        CollectionProcessorInterface $collectionProcessor
     ) {
         $this->bannerFactory = $bannerFactory;
         $this->bannerResource = $bannerResource;
         $this->collectionFactory = $collectionFactory;
+        $this->collectionProcessor = $collectionProcessor;
     }
 
     /**
@@ -96,16 +104,7 @@ class BannerRepository implements BannerRepositoryInterface
          * @var Collection $collection
          */
         $collection = $this->collectionFactory->create();
-
-        foreach ($searchCriteria->getFilterGroups() as $filterGroup) {
-            foreach ($filterGroup->getFilters() as $filter) {
-                $condition = $filter->getConditionType() ?: 'eq';
-                $collection->addFieldToFilter($filter->getField(), [$condition => $filter->getValue()]);
-            }
-        }
-
-        $collection->setCurPage($searchCriteria->getCurrentPage());
-        $collection->setPageSize($searchCriteria->getPageSize());
+        $this->collectionProcessor->process($searchCriteria, $collection);
 
         return $collection->getItems();
     }
