@@ -1,15 +1,22 @@
 <?php
 
-/**
- * @var \Nbrabant\Offers\Block\Category\Banners $block
- */
+/** @var $viewModel \Nbrabant\Offers\ViewModel\Category\Banners */
+$viewModel = $block->getViewModel();
 
-$banners = $block->getBanners();
+$banners = $viewModel->getBanners();
 
 ?>
 
 <?php if (!empty($banners)): ?>
 
-    <?php var_dump($banners); ?>
+    <div class="slider-wrapper">
+        <?php foreach ($banners as $banner): ?>
+            <div class="slide">
+                <a href="<?= $banner->getLink(); ?>">
+                    <?= $banner->getLabel(); ?>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
 <?php endif; ?>

@@ -1,53 +1,43 @@
 <?php
 
-namespace Nbrabant\Offers\Block\Category;
+namespace Nbrabant\Offers\ViewModel\Category;
 
-use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Framework\Registry;
-use Magento\Framework\View\Element\Template;
+use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Nbrabant\Offers\Api\BannerRepositoryInterface;
+use Nbrabant\Offers\Api\Data\BannerInterface;
 use Nbrabant\Offers\Model\ResourceModel\Banner\SearchCriteria;
 
-class Banners extends Template
+class Banners implements ArgumentInterface
 {
-    /**
-     * @var BannerRepositoryInterface
-     */
-    private $bannerRepository;
     /**
      * @var Registry
      */
     private $registry;
     /**
+     * @var BannerRepositoryInterface
+     */
+    private $bannerRepository;
+    /**
      * @var SearchCriteria
      */
     private $searchCriteria;
 
-    /**
-     * Banners constructor.
-     * @param Template\Context $context
-     * @param Registry $registry
-     * @param BannerRepositoryInterface $bannerRepository
-     * @param SearchCriteria $searchCriteria
-     * @param array $data
-     */
     public function __construct(
-        Template\Context $context,
         Registry $registry,
         BannerRepositoryInterface $bannerRepository,
-        SearchCriteria $searchCriteria,
-        array $data = []
+        SearchCriteria $searchCriteria
     ) {
-        parent::__construct($context, $data);
-        $this->bannerRepository = $bannerRepository;
         $this->registry = $registry;
+        $this->bannerRepository = $bannerRepository;
         $this->searchCriteria = $searchCriteria;
     }
 
     /**
      * Get actives banners for current category
      *
-     * @return array
+     * @return BannerInterface[]
      * @throws \Exception
      */
     public function getBanners(): array
@@ -61,12 +51,11 @@ class Banners extends Template
     }
 
     /**
-     * Retrieve current category
-     *
      * @return CategoryInterface
      */
-    private function getCurrentCategory(): CategoryInterface
+    public function getCurrentCategory(): CategoryInterface
     {
         return $this->registry->registry('current_category');
     }
+
 }
