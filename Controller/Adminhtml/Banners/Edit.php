@@ -5,6 +5,7 @@ namespace Nbrabant\Offers\Controller\Adminhtml\Banners;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Backend\Model\View\Result\Page;
+use Magento\Framework\View\Result\PageFactory;
 use Nbrabant\Offers\Api\BannerRepositoryInterface;
 use Nbrabant\Offers\Exception\OfferBannerNotFoundException;
 use Nbrabant\Offers\Exception\OfferWrongParameterException;
@@ -13,16 +14,22 @@ class Edit extends Action
 {
     const ADMIN_RESOURCE = 'Nbrabant_Offers::offers_banner';
     /**
+     * @var PageFactory
+     */
+    private $resultPageFactory;
+    /**
      * @var BannerRepositoryInterface
      */
     private $bannerRepository;
 
     public function __construct(
         Context $context,
+        PageFactory $resultPageFactory,
         BannerRepositoryInterface $bannerRepository
     ) {
         parent::__construct($context);
         $this->bannerRepository = $bannerRepository;
+        $this->resultPageFactory = $resultPageFactory;
     }
 
     /**
